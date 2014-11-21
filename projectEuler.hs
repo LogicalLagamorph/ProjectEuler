@@ -104,10 +104,17 @@ problem6 =((sum [ x | x <-[1..100]])^2) - (sum [x^2 | x <-[1..100]])
 -- Sieve of Eratosthenes method. I don't believe it actually has the log n * log n time that is advertise in the psuedo code. 
 -- Probably due to my implementation of it.
 
-primes = [x |x <-[2..],  isPrime x]
 problem7 = (last ( take 10001 [x |x <-[2..] , isPrime x]))
 
 
+-- problem 9 
+
+
+--A Pythagorean triplet is a set of three natural numbers, a < b < c, for which,
+--a2 + b2 = c2
+--For example, 32 + 42 = 9 + 16 = 25 = 52.
+--There exists exactly one Pythagorean triplet for which a + b + c = 1000.
+--Find the product abc.
 
 problem9 = [ x*y*z | x<-[0..1000], y<-[(x+1)..(1000-x)], z<-[(y+1)..(1000-y)] , ((x^2+y^2) == z^2) && (x+y+z == 1000)]
 
