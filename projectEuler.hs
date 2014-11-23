@@ -11,6 +11,7 @@ If we list all the natural numbers below 10 that are multiples of 3 or 5, we get
 Find the sum of all the multiples of 3 or 5 below 1000.
 
 -}
+
 problem1 = sum [ x | x <-[1..999], ((x `mod` 3) == 0) ||  ((x `mod` 5) == 0)] 
 
 fibSeq =  fib 1 1
@@ -276,10 +277,10 @@ factor x = factor' x 1
 
 problem12' :: Integer -> Integer
 problem12' x 
-	| (length $ factor $ sum ([ i | i<-[1..(squareRoot x)] ]++[x]) ) == 501 = x
+	| 500 <= (length ( factor $ sum ([ i | i<-[1..(squareRoot x)] ]++[x]) ) )= x
 	| otherwise = problem12' (x+1)
 
-problem12 = problem12' 0
+problem12 = [ x | x<- [1..]]
 
 {-
 
@@ -415,11 +416,11 @@ NOTE: Once the chain starts the terms are allowed to go above one million.
 
 -}
 
-sequnce :: Integer -> [Integer]
-sequnce x
+sequenceAlpha :: Integer -> [Integer]
+sequenceAlpha x
 	| x == 1 = [1]
-	| x `mod` 2 == 0 = x : sequnce (x `div` 2)
-	| otherwise = x : sequnce ( (3*x) +1)
+	| x `mod` 2 == 0 = x : sequenceAlpha (x `div` 2)
+	| otherwise = x : sequenceAlpha ( (3*x) +1)
 
 sequenceLengthFinder :: [(Int,Integer)] -> Int -> Integer -> Integer
 sequenceLengthFinder listElements @ ((x,y):xs) currMax seedForMax
@@ -427,5 +428,60 @@ sequenceLengthFinder listElements @ ((x,y):xs) currMax seedForMax
 	| x > currMax 		 = sequenceLengthFinder (tail listElements) x y
 	| otherwise 		 = sequenceLengthFinder (tail listElements) currMax seedForMax
 
-problem14 = sequenceLengthFinder [  ( i , j ) | ( i , j )<-[ (length (sequnce x), x )| x <- [1..1000000]] ] 0
+problem14 = maximum [ ( (length (sequenceAlpha x) ), x ) | x <- [1..1000000] ] 
 
+
+{-
+
+Problem 15
+
+
+
+Starting in the top left corner of a 2×2 grid, and only being able to move to the right and down, there are exactly 6 routes to the bottom right corner.
+
+How many such routes are there through a 20×20 grid?
+
+NOTE: The grid can be represent as bots(IE. cross points). To move right increment by 1, to move down increment by width of grid.
+      The grid can be represented by  by a list of from [1..(grid width* grid height)]
+-}
+
+twentyByTwentyGrid = [1..(21 * 21)]
+
+moveOnGrid :: Int -> [Int]
+moveOnGrid x
+	| x == (21*21) = []
+	| (x `mod` 21 == 0 ) = x : moveOnGrid (x+21)
+	|otherwise = x : moveOnGrid (x+1 )
+
+problem15 = length [ moveOnGrid x | x<-twentyByTwentyGrid ]
+
+
+{-
+
+Problem 16
+
+215 = 32768 and the sum of its digits is 3 + 2 + 7 + 6 + 8 = 26.
+
+What is the sum of the digits of the number 2^1000?
+
+
+-}
+problem16List = digitToList (2^1000)
+problem16 = sum [x | x<- problem16List]
+
+{-
+
+Problem 17
+
+
+
+If the numbers 1 to 5 are written out in words: one, two, three, four, five, then there are 3 + 3 + 5 + 4 + 4 = 19 letters used in total.
+
+If all the numbers from 1 to 1000 (one thousand) inclusive were written out in words, how many letters would be used?
+
+NOTE: Do not count spaces or hyphens. For example, 342 (three hundred and forty-two) contains 23 letters and 115 (one hundred and fifteen) contains 20 letters. The use of "and" when writing out numbers is in compliance with British usage.
+
+-}
+--		one 				 two 					three 				four				five		 				six			seven					eight			nine
+singleLetterValues  = sum ( [3 | x <-[1..90]] ++ [3 | x <-[1..90]] ++ [5 | x <-[1..90]] ++ [4 | x <-[1..90]] ++ [4 | x <-[1..90]] ++ [3 | x <-[1..90]] ++ [5 | x <-[1..90]] ++ [5 | x <-[1..90]]++ [4 | x <-[1..90]])
+--
