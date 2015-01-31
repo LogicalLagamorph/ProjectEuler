@@ -1,5 +1,3 @@
--- LogicalLagamorph
--- Code@Rabbit12
 
 import Data.Int
 
