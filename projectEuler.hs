@@ -278,7 +278,7 @@ problem12' x
 	| 500 <= (length ( factor $ sum ([ i | i<-[1..(squareRoot x)] ]++[x]) ) )= x
 	| otherwise = problem12' (x+1)
 
-problem12 = [ x | x<- [1..]]
+problem12 = [ x | x<- [1..], y <- [1..]]
 
 {-
 
@@ -451,7 +451,7 @@ moveOnGrid x
 	| (x `mod` 21 == 0 ) = x : moveOnGrid (x+21)
 	|otherwise = x : moveOnGrid (x+1 )
 
-problem15 = length [ moveOnGrid x | x<-twentyByTwentyGrid ]
+problem15 = [ x | x <-[422..441]]
 
 
 {-
