@@ -1,6 +1,5 @@
 # LogicalLagamorph
 # 
-from future_builtins import map, filter
 import math
 
 #I hate global variables but it's eulers project.This is going to be use a bit
@@ -22,11 +21,14 @@ def fibTo4Million(seed):
 		fib.append(fibTo4Million(seed +fib[-2]))
 
 #test to see if a number is prime
-def isPrime( testValue):
-	for x in range(2, int( math.sqrt(testValue) )+1 ):
-		if( testValue % x == 0):
-			return False
-	return True
+def isPrime(n):
+    if n==2 or n==3: return True
+    if n%2==0 or n<2: return False
+    for i in range(3,int(n**0.5)+1,2):   # only odd numbers
+        if n%i==0:
+            return False    
+
+    return True
 
 
 # Sum all multiples of 3 or 5 from 1 to 100
@@ -112,7 +114,7 @@ def problem8():
 		52584907711670556013604839586446706324415722155397
 		53697817977846174064955149290862569321978468622482
 		83972241375657056057490261407972968652414535100474
-		821663704844031998900088b5243450658541227588666881
+		82166370484403199890008895243450658541227588666881
 		16427171479924442928230863465674813919123162824586
 		17866458359124566529476545682848912883142607690042
 		24219022671055626321111109370544217506941658960408
@@ -120,20 +122,37 @@ def problem8():
 		84580156166097919133875499200524063689912560717606
 		05886116467109405077541002256983155200055935729725
 		71636269561882670428252483600823257530420752963450"""
+	thousandDigitNum = [ x for x in thousandDigitNum if x!='\n']
+	thousandDigitNum = [ x for x in thousandDigitNum if x!='\t']
 	thousandElementList = [int(x) for x in thousandDigitNum ]
-	max13DigitProduct=0
-	for x in thousandElementList:
+	
+	max13DigitProduct=1
+	for x in range(0,987):
 		tempMax=1
-		for y in range(x,x+14):
+		for y in range(x,x+13):
 			tempMax = tempMax*thousandElementList[y]
-		if(tempMax > max13DigitProduct):
-			max13DigitProduct=tempMax
+			if(tempMax > max13DigitProduct):
+				max13DigitProduct=tempMax
 	return max13DigitProduct
 
 #There exists exactly one Pythagorean triplet for which a + b + c = 1000.
 #Find the product abc.
 
+def problem9():
+	for a in range(1,1000):
+		for b in range(1,1000-a):
+			c = 1000-a-b
+			if(a*a + b*b ) == (c*c):
+				if (a+b+c) == 1000 :
+					return a*b*c
 #Find the sum of all the primes below two million.
+
+def problem10():
+	sumofPrimes=0
+	for x in range(1,2000000):
+		if(isPrime(x)):
+			sumofPrimes +=x
+	return sumofPrimes
 
 grid20x20 = """
 	08 02 22 97 38 15 00 40 00 75 04 05 07 78 52 12 50 77 91 08
@@ -170,7 +189,7 @@ grid20x20 = """
 
 #Work out the first ten digits of the sum of the following one-hundred 50-digit numbers.
 
-one-hundred50DigitNumbers = """
+oneHundred50DigitNumbers = """
 	37107287533902102798797998220837590246510135740250
 	46376937677490009712648124896970078050417018260538
 	74324986199524741059474233309513058123726617309629
@@ -326,6 +345,8 @@ def main():
 	print ("The solution to problem 6 is: " + str( problem6() ))
 	print ("The solution to problem 7 is: " + str( problem7() ))
 	print ("The solution to problem 8 is: " + str( problem8() ))
+	print ("The solution to problem 9 is: " + str( problem9() ))
+	print ("The solution to problem 10 is: " + str( problem10() ))
 
 if __name__ == '__main__':
 	main()
